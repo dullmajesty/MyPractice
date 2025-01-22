@@ -10,33 +10,20 @@ export default function DrawerLayout() {
         <Drawer.Screen
             name="(tabs)" 
             options={{
-                drawerLabel: 'Home',
-                title: 'Home',
-                drawerIcon: ({ focused}) => <MaterialCommunityIcons name={focused ? 'home' : 'home-outline'} size={20} />,
+                drawerLabel: 'Profile',
+                title: 'Dashboard',
+                drawerIcon: ({ focused}) => <MaterialCommunityIcons name={focused ? 'account' : 'account-outline'} size={20} />,
             }}
          />
 
         <Drawer.Screen
-            name="biodata" 
+            name="instruction" 
             options={{
-                drawerLabel: 'BioData',
-                title: 'BioData',
-                drawerIcon: ({ focused}) => <MaterialCommunityIcons name={focused ? 'account' : 'account-outline'} size={20} />,
+                drawerLabel: 'Instruction',
+                title: 'Instruction',
+                drawerIcon: ({ focused}) => <MaterialCommunityIcons name={focused ? 'book' : 'book-outline'} size={20} />,
             }}
         />
-
-        <Drawer.Screen
-            name="wish" 
-            options={{
-                drawerLabel: 'Wish',
-                title: 'Wish',
-                drawerIcon: ({ focused}) => <MaterialCommunityIcons name={focused ? 'star' : 'star-outline'} size={20} />,
-            }}
-        />
-
-        
-
-        
       </Drawer>
     </GestureHandlerRootView>
   );

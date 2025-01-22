@@ -1,8 +1,13 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
 import React from "react";
+import { View, Text, StyleSheet, ScrollView, ImageBackground } from "react-native";
 
 const AllAboutMeSchoolEdition = () => {
     return (
+        <ImageBackground
+            source={require("../../../assets/biodata.png")} 
+            style={styles.imageBackground}
+            resizeMode="cover"
+        >
             <ScrollView contentContainerStyle={styles.container}>
                 {/* Header Section */}
                 <View style={styles.headerBox}>
@@ -83,18 +88,21 @@ const AllAboutMeSchoolEdition = () => {
                     <Text style={styles.value}>“Why fit in when you were born to stand out?”</Text>
                 </View>
             </ScrollView>
+        </ImageBackground>
     );
 };
 
 const styles = StyleSheet.create({
+    imageBackground: {
+        flex: 1,
+    },
     container: {
         flexGrow: 1,
         alignItems: "center",
-        backgroundColor: "#C8A8E9",
         padding: 20,
     },
     headerBox: {
-        backgroundColor: "#c3c7f3", 
+        backgroundColor: "#f4c2c2",
         padding: 15,
         borderRadius: 10,
         marginBottom: 20,
@@ -114,7 +122,7 @@ const styles = StyleSheet.create({
     },
     sectionBox: {
         width: "90%",
-        backgroundColor: "#FFFFFF", // White for clean contrast
+        backgroundColor: "#FFFFFF",
         borderRadius: 15,
         padding: 20,
         marginBottom: 15,
@@ -123,7 +131,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.15,
         shadowRadius: 3,
         elevation: 3,
-        
     },
     subHeader: {
         fontSize: 18,

@@ -22,29 +22,40 @@ const DashboardLayout = () => {
             }}
         >
             <Tabs.Screen
-                name="index"
-                options={{
-                    title: "Home",
-                    tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="home" size={size} color={color} />
-                    ),
-                }}
-            />
-            <Tabs.Screen
                 name="profile"
                 options={{
                     title: "Profile",
                     tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="account" size={size} color={color} />
+                        <MaterialCommunityIcons name="account-outline" size={size} color={color} />
                     ),
                 }}
             />
             <Tabs.Screen
-                name="setting"
+                name="biodata"
                 options={{
-                    title: "Setting",
+                    title: "Bio Data",
                     tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="cog" size={size} color={color} />
+                        <MaterialCommunityIcons name="card-account-details-outline" size={size} color={color} />
+                    ),
+                }}
+            />
+
+            <Tabs.Screen
+                name="skills"
+                options={{
+                    title: "Skills",
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons name="puzzle-outline" size={size} color={color} />
+                    ),
+                }}
+            />
+
+            <Tabs.Screen
+                name="bucketlist"
+                options={{
+                    title: "Bucket List",
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons name="checkbox-marked-outline" size={size} color={color} />
                     ),
                 }}
             />

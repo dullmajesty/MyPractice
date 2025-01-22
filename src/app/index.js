@@ -8,7 +8,7 @@ const Welcome = () => {
 
     return (
         <View style={styles.container}>
-            <Image source={require('../assets/sea.jpg')} style={styles.backgroundImage} />
+            <Image source={require('../assets/pink.png')} style={styles.backgroundImage} />
             <View style={styles.overlay} />
             <Text style={styles.title}>Welcome!</Text>
             <TouchableOpacity
@@ -68,19 +68,16 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
     },
     button: {
-        backgroundColor: '#f4c2c2', // A more vibrant color
+        backgroundColor: '#f4c2c2', 
         paddingVertical: 15,
-        paddingHorizontal: 40,
-        borderRadius: 30, // More rounded corners for a modern look
+        paddingHorizontal: 70,
+        borderRadius: 5, 
         marginVertical: 10,
-        elevation: 5, // Adds a shadow effect on Android
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.5,
+        marginTop: 20,
+        elevation: 10, 
+        boxShadow: '0px 5px 6px rgba(0, 0, 0, 0.2)', 
+        borderBottomWidth: 3, 
+        borderBottomColor: '#d1a1a1', 
     },
     buttonText: {
         color: '#fff',

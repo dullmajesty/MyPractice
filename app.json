@@ -1,17 +1,17 @@
 {
   "expo": {
-    "name": "mynawong",
-    "slug": "mynawong",
+    "name": "Profile",
+    "slug": "Profile",
     "scheme": "com.mynawong.app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/picture.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#f1efe7"
     },
     "ios": {
       "supportsTablet": true
@@ -20,13 +20,21 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.dullmajesty.Profile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      }
+      
+    },
+    "owner": "dullmajesty"
   }
 }

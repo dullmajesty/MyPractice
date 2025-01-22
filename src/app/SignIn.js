@@ -22,7 +22,7 @@ const SignIn = () => {
 
     return (
         <ImageBackground
-            source={require('../assets/sea.jpg')} 
+            source={require('../assets/pink.png')} 
             style={styles.outerContainer}
             resizeMode="cover"
         >
@@ -125,7 +125,23 @@ const styles = StyleSheet.create({
         marginTop: 20,
         width: '100%',
         alignItems: 'center',
+        boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.2)', // Adds shadow for a 3D look
+        borderBottomWidth: 3, // Simulates depth
+        borderBottomColor: '#d1a1a1', // A darker shade for the bottom border
     },
+    buttonPressed: {
+        backgroundColor: '#f4c2c2',
+        padding: 10,
+        borderRadius: 5,
+        marginTop: 20,
+        width: '100%',
+        alignItems: 'center',
+        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)', // Reduced shadow
+        borderBottomWidth: 1, // Shallower depth
+        borderBottomColor: '#d1a1a1',
+        transform: [{ scale: 0.98 }], // Slightly shrink on press
+    },
+    
     buttonText: {
         color: '#fff',
         fontSize: 18,

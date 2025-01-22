@@ -1,34 +1,20 @@
-import React, { useState, useEffect } from 'react'; 
-import { View, Text, Image, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, Switch, Linking } from 'react-native';
+import React, { useState, useEffect } from 'react';  
+import { View, Text, Image, StyleSheet, SafeAreaView, TouchableOpacity, Linking, ScrollView, Modal } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import { useFonts } from 'expo-font';
-import { FontAwesome } from '@expo/vector-icons'; 
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { router } from 'expo-router';
+import { useRoute } from '@react-navigation/native';
 
 const Profile = () => {
-  const navigation = useNavigation();
   const route = useRoute();
   const { updatedUserData } = route.params || {};
-
-  const lightTheme = {
-    background: '#ffffff',
-    text: '#000000',
-  };
-
-  const darkTheme = {
-    background: '#000000',
-    text: '#ffffff',
-  };
-
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const theme = isDarkMode ? darkTheme : lightTheme;
 
   const [birthday, setBirthday] = useState('January 2, 2003');
   const [status, setStatus] = useState('In Relationship');
   const [location, setLocation] = useState('Gusa, Cagayan De Oro');
   const [interest, setInterest] = useState('Coding, Gaming, Reading');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     if (updatedUserData) {
@@ -38,11 +24,6 @@ const Profile = () => {
       setInterest(updatedUserData.interest);
     }
   }, [updatedUserData]);
-
-
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-  };
 
   const handleSocialMediaPress = (platform) => {
     let url;
@@ -72,25 +53,40 @@ const Profile = () => {
     { source: require('../../../assets/6.jpg'), style: styles.imageWide },
   ];
 
+  const handleImagePress = (image) => {
+    setSelectedImage(image);
+    setModalVisible(true);
+  };
+
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
-      <Image source={require('../../../assets/sea.jpg')} style={styles.backgroundImage} />
+    <SafeAreaView style={styles.container}>
+      <Image source={require('../../../assets/pink.png')} style={styles.backgroundImage} />
 
-      <View style={styles.themeToggleContainer}>
-        <Ionicons name={isDarkMode ? 'moon' : 'sunny'} size={24} color={theme.text} />
-        <Switch
-          value={isDarkMode}
-          onValueChange={toggleTheme}
-          thumbColor={isDarkMode ? "#f5dd4b" : "#f4f3f4"}
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-        />
-      </View>
+      {/* Image Modal */}
+      <Modal
+        visible={modalVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
+              <Ionicons name="close" size={30} color="#ffffff" />
+            </TouchableOpacity>
+            {selectedImage && (
+              <Image source={selectedImage.source} style={styles.modalImage} />
+            )}
+          </View>
+        </View>
+      </Modal>
 
+      {/* Main Content */}
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.content}>
           <Image source={require('../../../assets/10.jpg')} style={styles.profileImage} />
-          <Text style={[styles.name, { color: theme.text }]}>Mariah Shannen Sumaria</Text>
-          <Text style={[styles.description, { color: theme.text }]}>{'Developer'}</Text>
+          <Text style={styles.name}>Mariah Shannen Sumaria</Text>
+          <Text style={styles.description}>{'Developer'}</Text>
 
           <View style={styles.socialMediaContainer}>
             <TouchableOpacity onPress={() => handleSocialMediaPress('Facebook')}>
@@ -107,36 +103,29 @@ const Profile = () => {
           <View style={styles.aboutMeSection}>
             <TouchableOpacity style={styles.aboutItem}>
               <FontAwesome6 name="cake-candles" size={24} color="#f4c2c2" />
-              <Text style={[styles.aboutMeText, { color: theme.text }]}>{birthday}</Text>
+              <Text style={styles.aboutMeText}>{birthday}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.aboutItem}>
               <Ionicons name="heart" size={24} color="#f4c2c2" />
-              <Text style={[styles.aboutMeText, { color: theme.text }]}>{status}</Text>
+              <Text style={styles.aboutMeText}>{status}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.aboutItem}>
               <Ionicons name="location" size={24} color="#f4c2c2" />
-              <Text style={[styles.aboutMeText, { color: theme.text }]}>{location}</Text>
+              <Text style={styles.aboutMeText}>{location}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.aboutItem}>
               <Ionicons name="star" size={24} color="#f4c2c2" />
-              <Text style={[styles.aboutMeText, { color: theme.text }]}>{interest}</Text>
+              <Text style={styles.aboutMeText}>{interest}</Text>
             </TouchableOpacity>
           </View>
 
           <View style={styles.imageGrid}>
             {images.map((image, index) => (
-              <Image key={index} source={image.source} style={[styles.image, image.style]} />
+              <TouchableOpacity key={index} onPress={() => handleImagePress(image)}>
+                <Image source={image.source} style={[styles.image, image.style]} />
+              </TouchableOpacity>
             ))}
           </View>
-
-          <TouchableOpacity 
-            style={styles.manageUserButton} 
-            onPress={() => {
-              router.navigate('ManageUser', { existingUserData: { birthday, status, location, interest } });
-            }}
-          >
-            <Text style={styles.manageUserButtonText}>Manage User</Text>
-          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -146,19 +135,7 @@ const Profile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
-    height: '100%',
-    margin: 0,
-    padding: 0,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  scrollContent: {
-    flexGrow: 1,
-    paddingBottom: 120,
+    backgroundColor: '#ffffff',
   },
   backgroundImage: {
     position: 'absolute',
@@ -171,18 +148,12 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     opacity: 0.4,
   },
-  themeToggleContainer: {
-    position: 'absolute',
-    top: 35,
-    right: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    zIndex: 1,
+  scrollContent: {
+    paddingBottom: 20,
   },
   content: {
     alignItems: 'center',
-    marginTop: 100,
-    paddingTop: 20,
+    marginTop: 30,
   },
   profileImage: {
     width: 150,
@@ -195,12 +166,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'Updock',
     marginBottom: 10,
+    color: '#000000',
   },
   description: {
     fontSize: 16,
     textAlign: 'center',
     paddingHorizontal: 20,
     marginBottom: 10,
+    color: '#000000',
   },
   socialMediaContainer: {
     flexDirection: 'row',
@@ -221,7 +194,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   aboutItem: {
-    width: '45%',  // Adjusted for two items per row
+    width: '45%',
     alignItems: 'center',
     marginVertical: 10,
     flexDirection: 'column',
@@ -230,6 +203,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     marginTop: 5,
+    color: '#000000',
   },
   imageGrid: {
     flexDirection: 'row',
@@ -242,10 +216,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     margin: 5,
   },
-  imageLarge: {
-    width: 150,
-    height: 150,
-  },
   imageSmall: {
     width: 90,
     height: 90,
@@ -254,17 +224,28 @@ const styles = StyleSheet.create({
     width: 160,
     height: 100,
   },
-  manageUserButton: {
-    backgroundColor: '#f4c2c2',
-    borderRadius: 5,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    marginTop: 20,
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.8)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  manageUserButtonText: {
-    color: '#ffffff',
-    fontWeight: 'bold',
-    textAlign: 'center',
+  modalContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+  },
+  modalImage: {
+    width: 300,
+    height: 300,
+    borderRadius: 20,
+    resizeMode: 'contain',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    zIndex: 10,
   },
 });
 

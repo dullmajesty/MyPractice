@@ -9,7 +9,7 @@ const Welcome = () => {
 
     return (
         <View style={styles.container}>
-            <Image source={require('../assets/sea.jpg')} style={styles.backgroundImage} />
+            <Image source={require('../assets/pink.png')} style={styles.backgroundImage} />
             <View style={styles.overlay} />
             <Text style={styles.title}>Welcome!</Text>
             <TouchableOpacity
