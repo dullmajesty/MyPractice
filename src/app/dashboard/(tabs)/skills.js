@@ -39,8 +39,9 @@ const Skills = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: '50%', 
     padding: 10,
+    justifyContent: 'center', 
   },
   title: {
     fontSize: 24,
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     padding: 20,
-    marginHorizontal: 10,
+    marginHorizontal: 40,
     borderRadius: 10,
     width: 250,
     shadowOpacity: 0.1,
@@ -65,9 +66,9 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   icon: {
-    width: 50,
-    height: 50,
-    marginRight: 15,
+    width: 90,
+    height: 80,
+    marginRight: 20,
     borderRadius: 25,
   },
   skillText: {
