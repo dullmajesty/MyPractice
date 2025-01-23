@@ -1,23 +1,57 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { router } from 'expo-router';
+import { router } from "expo-router";
+import { supabase } from '../lib/supabase'; 
+import Icon from 'react-native-vector-icons/Feather'; // Import Feather Icons for eye toggle
 
 const SignIn = () => {
     const navigation = useNavigation();
-    
-    const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSignIn = () => {
-        if (password !== confirmPassword) {
-            alert("Passwords do not match!");
+    const handleSignIn = async () => {
+        if (!email || !password) {
+            Alert.alert("Error", "Please fill in both email and password fields.");
             return;
         }
-        
-        router.navigate('dashboard');
+
+        setIsSubmitting(true); // Disable button while submitting
+        try {
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email,
+                password,
+            });
+
+            if (error) {
+                let errorMessage = "An unexpected error occurred.";
+                
+                // Check for specific error codes or conditions
+                if (error.message.includes("invalid")) {
+                    errorMessage = "Invalid email or password. Please try again.";
+                }
+                
+                Alert.alert("Sign In Error", errorMessage);
+            } else {
+                if (data.user?.email_confirmed_at) {
+                    Alert.alert("Success", "Welcome back!");
+                    router.navigate('dashboard');
+                } else {
+                    Alert.alert("Email Not Verified", "Please verify your email first.");
+                }
+            }
+        } catch (error) {
+            console.error("Sign In Error:", error.message);
+            Alert.alert("Error", "An unexpected error occurred. Please try again.");
+        } finally {
+            setIsSubmitting(false); // Re-enable button after submission
+        }
+    };
+
+    const handleForgotPassword = () => {
+        router.navigate('ForgotPassword');
     };
 
     return (
@@ -27,53 +61,42 @@ const SignIn = () => {
             resizeMode="cover"
         >
             <View style={styles.innerContainer}>
-                <Text style={styles.signIn}>Sign In</Text>
-
-                <Text style={styles.label}>Full Name</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter your full name"
-                    placeholderTextColor="#666"
-                    value={fullName}
-                    onChangeText={setFullName}
-                />
-
+                <Text style={styles.signUp}>Sign In</Text>
+                
                 <Text style={styles.label}>Email</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Enter your email"
-                    placeholderTextColor="#666"
+                    placeholderTextColor="#000"
                     value={email}
                     onChangeText={setEmail}
-                    keyboardType="email-address"
                 />
-
+                
                 <Text style={styles.label}>Password</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter your password"
-                    placeholderTextColor="#666"
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry
-                />
-
-                <Text style={styles.label}>Confirm Password</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Confirm your password"
-                    placeholderTextColor="#666"
-                    value={confirmPassword}
-                    onChangeText={setConfirmPassword}
-                    secureTextEntry
-                />
-
-                <TouchableOpacity style={styles.button} onPress={handleSignIn}>
-                    <Text style={styles.buttonText}>Sign In</Text>
+                <View style={styles.passwordContainer}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter your password"
+                        placeholderTextColor="#000"
+                        secureTextEntry={!showPassword} // Toggle password visibility
+                        value={password}
+                        onChangeText={setPassword}
+                    />
+                    <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
+                        <Icon name={showPassword ? 'eye-off' : 'eye'} size={24} color="#666" />
+                    </TouchableOpacity>
+                </View>
+                
+                <TouchableOpacity style={[styles.button, isSubmitting && { opacity: 0.5 }]} onPress={handleSignIn} disabled={isSubmitting}>
+                    <Text style={styles.buttonText}>{isSubmitting ? "Signing In..." : "Sign In"}</Text>
                 </TouchableOpacity>
-
+                
+                <TouchableOpacity style={styles.forgotPasswordContainer} onPress={handleForgotPassword}>
+                    <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                </TouchableOpacity>
+                
                 <TouchableOpacity onPress={() => router.navigate('SignUp')}>
-                    <Text style={styles.signUpText}>Don't have an account? Sign up</Text>
+                    <Text style={styles.signInText}>Don't have an account? Sign Up</Text>
                 </TouchableOpacity>
             </View>
         </ImageBackground>
@@ -85,9 +108,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        padding: 20,
     },
     innerContainer: {
-        width: '90%',
+        width: '100%',
         padding: 20,
         backgroundColor: 'rgba(255, 255, 255, 0.9)', 
         borderRadius: 10,
@@ -98,7 +122,7 @@ const styles = StyleSheet.create({
         shadowRadius: 5,
         elevation: 8, 
     },
-    signIn: {
+    signUp: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 20,
@@ -106,8 +130,8 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 16,
         color: '#333',
-        alignSelf: 'flex-start',
         marginTop: 10,
+        alignSelf: 'flex-start',
     },
     input: {
         width: '100%',
@@ -118,6 +142,16 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         marginTop: 5,
     },
+    passwordContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+        position: 'relative',
+    },
+    eyeIcon: {
+        position: 'absolute',
+        right: 10,
+    },
     button: {
         backgroundColor: '#f4c2c2',
         padding: 10,
@@ -125,29 +159,24 @@ const styles = StyleSheet.create({
         marginTop: 20,
         width: '100%',
         alignItems: 'center',
-        boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.2)', // Adds shadow for a 3D look
-        borderBottomWidth: 3, // Simulates depth
-        borderBottomColor: '#d1a1a1', // A darker shade for the bottom border
+        boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.2)', 
+        borderBottomWidth: 3, 
+        borderBottomColor: '#d1a1a1', 
     },
-    buttonPressed: {
-        backgroundColor: '#f4c2c2',
-        padding: 10,
-        borderRadius: 5,
-        marginTop: 20,
-        width: '100%',
-        alignItems: 'center',
-        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)', // Reduced shadow
-        borderBottomWidth: 1, // Shallower depth
-        borderBottomColor: '#d1a1a1',
-        transform: [{ scale: 0.98 }], // Slightly shrink on press
-    },
-    
     buttonText: {
         color: '#fff',
         fontSize: 18,
     },
-    signUpText: {
+    forgotPasswordContainer: {
         marginTop: 15,
+    },
+    forgotPasswordText: {
+        color: '#007bff',
+        fontSize: 16,
+        textDecorationLine: 'underline',
+    },
+    signInText: {
+        marginTop: 20,
         color: '#1E90FF',
         fontSize: 16,
         textDecorationLine: 'underline',

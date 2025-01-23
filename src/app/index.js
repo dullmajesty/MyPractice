@@ -13,15 +13,15 @@ const Welcome = () => {
             <Text style={styles.title}>Welcome!</Text>
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => navigation.navigate('SignUp')}
-            >
-                <Text style={styles.buttonText}>Sign Up</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.button}
                 onPress={() => navigation.navigate('SignIn')}
             >
                 <Text style={styles.buttonText}>Sign In</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('SignUp')}
+            >
+                <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
         </View>
     );

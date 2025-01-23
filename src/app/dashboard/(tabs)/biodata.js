@@ -9,12 +9,12 @@ const AllAboutMeSchoolEdition = () => {
             resizeMode="cover"
         >
             <ScrollView contentContainerStyle={styles.container}>
-                {/* Header Section */}
+                
                 <View style={styles.headerBox}>
                     <Text style={styles.header}>All About Me</Text>
                 </View>
 
-                {/* Name Section */}
+             
                 <View style={styles.sectionBox}>
                     <Text style={styles.subHeader}>Name:</Text>
                     <Text style={styles.value}>
@@ -22,7 +22,7 @@ const AllAboutMeSchoolEdition = () => {
                     </Text>
                 </View>
 
-                {/* Family Section */}
+              
                 <View style={styles.sectionBox}>
                     <Text style={styles.subHeader}>Family:</Text>
                     <Text style={styles.value}>
@@ -31,7 +31,7 @@ const AllAboutMeSchoolEdition = () => {
                     </Text>
                 </View>
 
-                {/* Favorites Section */}
+                
                 <View style={styles.sectionBox}>
                     <Text style={styles.subHeader}>Favorites:</Text>
                     <Text style={styles.value}>• Favorite Color: Pink — because I'm very girly!</Text>
@@ -52,7 +52,7 @@ const AllAboutMeSchoolEdition = () => {
                     <Text style={styles.value}>• Hair Color: Brown, dark blonde</Text>
                 </View>
 
-                {/* Hobbies Section */}
+               
                 <View style={styles.sectionBox}>
                     <Text style={styles.subHeader}>Hobbies:</Text>
                     <Text style={styles.value}>• Sleep</Text>
@@ -60,14 +60,14 @@ const AllAboutMeSchoolEdition = () => {
                     <Text style={styles.value}>• Watching movies or reading comics</Text>
                 </View>
 
-                {/* Achievements Section */}
+                
                 <View style={styles.sectionBox}>
                     <Text style={styles.subHeader}>Achievements:</Text>
                     <Text style={styles.value}>• Dean's Lister last semester</Text>
                     <Text style={styles.value}>• Finished my project!</Text>
                 </View>
 
-                {/* Fun Facts Section */}
+                
                 <View style={styles.sectionBox}>
                     <Text style={styles.subHeader}>Fun Facts:</Text>
                     <Text style={styles.value}>• I've never tried samgyup.</Text>
@@ -75,14 +75,14 @@ const AllAboutMeSchoolEdition = () => {
                     <Text style={styles.value}>• My favorite random word is "indeed".</Text>
                 </View>
 
-                {/* Personal Goals Section */}
+             
                 <View style={styles.sectionBox}>
                     <Text style={styles.subHeader}>Personal Goals:</Text>
                     <Text style={styles.value}>• Short-term: Get better at being lazy.</Text>
                     <Text style={styles.value}>• Long-term: Work at the biggest company.</Text>
                 </View>
 
-                {/* Motto Section */}
+              
                 <View style={styles.sectionBox}>
                     <Text style={styles.subHeader}>Motto to Live By:</Text>
                     <Text style={styles.value}>“Why fit in when you were born to stand out?”</Text>

@@ -20,8 +20,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.shannenkyuite.Profile"
+      }    
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -32,11 +31,7 @@
     "extra": {
       "router": {
         "origin": false
-      },
-      "eas": {
-        "projectId": "cc3c09e8-f9ac-450d-bbde-d52bea7fa512"
-      }
-    },
-    "owner": "shannenkyuite"
+      }    
+    } 
   }
 }

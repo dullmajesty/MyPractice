@@ -14,15 +14,15 @@ const Welcome = () => {
             <Text style={styles.title}>Welcome!</Text>
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => router.navigate('SignUp')}
-            >
-                <Text style={styles.buttonText}>Sign Up</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.button}
                 onPress={() => router.navigate('SignIn')}
             >
                 <Text style={styles.buttonText}>Sign In</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => router.navigate('SignUp')}
+            >
+                <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
         </View>
     );
@@ -69,12 +69,12 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
     },
     button: {
-        backgroundColor: '#f4c2c2', // A more vibrant color
+        backgroundColor: '#f4c2c2', 
         paddingVertical: 15,
         paddingHorizontal: 40,
-        borderRadius: 30, // More rounded corners for a modern look
+        borderRadius: 30, 
         marginVertical: 10,
-        elevation: 5, // Adds a shadow effect on Android
+        elevation: 5, 
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 18,
         textAlign: 'center',
-        fontWeight: '600', // Slightly bolder text
+        fontWeight: '600', 
     },
 });
 
